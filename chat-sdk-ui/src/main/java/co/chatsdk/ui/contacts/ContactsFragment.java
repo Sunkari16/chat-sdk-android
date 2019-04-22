@@ -259,9 +259,9 @@ public class ContactsFragment extends BaseFragment {
         if (!inflateMenu)
             return;
 
-//        MenuItem item = menu.add(Menu.NONE, R.id.action_chat_sdk_add, 10, "Add Chat");
-      //  item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-       // item.setIcon(R.drawable.ic_plus);
+        MenuItem item = menu.add(Menu.NONE, R.id.action_chat_sdk_add, 10, "Add Chat");
+        item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+        item.setIcon(R.drawable.ic_plus);
     }
 
     @Override
@@ -271,10 +271,10 @@ public class ContactsFragment extends BaseFragment {
         int id = item.getItemId();
 
         // Each user that will be found in the search context will be automatically added as a contact.
-     //   if (id == R.id.action_chat_sdk_add) {
-     //       SearchActivity.startSearchActivity(getActivity());
-     //       return true;
-      //  }
+        if (id == R.id.action_chat_sdk_add) {
+            SearchActivity.startSearchActivity(getActivity());
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }

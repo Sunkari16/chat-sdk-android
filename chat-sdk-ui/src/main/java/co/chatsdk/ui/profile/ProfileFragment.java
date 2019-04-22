@@ -465,10 +465,10 @@ public class ProfileFragment extends BaseFragment {
         if (!getUser().isMe())
             return;
 
-//        MenuItem item =
-//                menu.add(Menu.NONE, R.id.action_chat_sdk_settings, 12, getString(R.string.action_settings));
-//        item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-//        item.setIcon(R.drawable.icn_24_settings);
+        MenuItem item =
+                menu.add(Menu.NONE, R.id.action_chat_sdk_settings, 12, getString(R.string.action_settings));
+        item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+        item.setIcon(R.drawable.icn_24_settings);
     }
 
     @Override
@@ -477,11 +477,11 @@ public class ProfileFragment extends BaseFragment {
         /* Cant use switch in the library*/
         int id = item.getItemId();
 
-//        if (id == R.id.action_chat_sdk_settings)
-//        {
-//            showSettings();
-//            return true;
-//        }
+        if (id == R.id.action_chat_sdk_settings)
+        {
+            showSettings();
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }

@@ -51,9 +51,9 @@ public class ProfileActivity extends BaseActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-//        chatMenuItem = menu.add(Menu.NONE, R.id.action_chat_sdk_chat, 1, getString(R.string.action_chat));
-//        chatMenuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-//        chatMenuItem.setIcon(R.drawable.icn_24_chat);
+        chatMenuItem = menu.add(Menu.NONE, R.id.action_chat_sdk_chat, 1, getString(R.string.action_chat));
+        chatMenuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+        chatMenuItem.setIcon(R.drawable.icn_24_chat);
 
         return true;
     }
@@ -64,10 +64,10 @@ public class ProfileActivity extends BaseActivity {
         /* Cant use switch in the library*/
         int id = item.getItemId();
 
-//        if (id == R.id.action_chat_sdk_chat) {
-//            startChat();
-//            return true;
-//        }
+        if (id == R.id.action_chat_sdk_chat) {
+            startChat();
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }

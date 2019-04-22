@@ -101,11 +101,11 @@ public abstract class ThreadsFragment extends BaseFragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-//        if (allowThreadCreation()) {
-//            addMenuItem = menu.add(Menu.NONE, R.id.action_chat_sdk_add, 10, getString(R.string.chat_thread_fragment_add_item_text));
-//            addMenuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-//            addMenuItem.setIcon(R.drawable.ic_plus);
-//        }
+        if (allowThreadCreation()) {
+            addMenuItem = menu.add(Menu.NONE, R.id.action_chat_sdk_add, 10, getString(R.string.chat_thread_fragment_add_item_text));
+            addMenuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+            addMenuItem.setIcon(R.drawable.ic_plus);
+        }
     }
 
     // Override this in the subclass to handle the plus button

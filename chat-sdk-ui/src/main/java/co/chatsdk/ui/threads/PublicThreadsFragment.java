@@ -41,10 +41,10 @@ public class PublicThreadsFragment extends ThreadsFragment {
         /* Cant use switch in the library*/
         int id = item.getItemId();
 
-//        if (id == R.id.action_chat_sdk_add) {
-//            ChatSDK.ui().startActivity(getContext(), ChatSDK.ui().getThreadEditDetailsActivity());
-//            return true;
-//        }
+        if (id == R.id.action_chat_sdk_add) {
+            ChatSDK.ui().startActivity(getContext(), ChatSDK.ui().getThreadEditDetailsActivity());
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 

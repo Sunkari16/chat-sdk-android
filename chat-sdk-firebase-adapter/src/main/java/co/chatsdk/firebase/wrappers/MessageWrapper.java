@@ -211,7 +211,7 @@ public class MessageWrapper  {
                 }, e::onError);
             }
             else {
-                e.onError(new Throwable(ChatSDK.shared().context().getString(R.string.message_doesnt_have_a_thread)));
+                e.onError(new Throwable("error occurred"));
             }
         }).subscribeOn(Schedulers.single());
 

@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="white">#ffffff</color>
-    <color name="black">#000000</color>
     <color name="dark_text">#5F5F5F</color>
 
     <color name="primary">@android:color/holo_blue_light</color>
     <color name="primary_dark">@android:color/holo_blue_dark</color>
     <color name="accent">@android:color/holo_blue_light</color>
     <color name="text_primary">@android:color/white</color>
-    <color name="window_background">@android:color/background_light</color>
 
     <color name="login_button_color">#1c93db</color>
     <color name="register_button_color">#78b737</color>
     <color name="anonymous_button_color">#aaaaaa</color>
     <color name="logout_button_color">#ae2020</color>
 
+    <color name="chat_manch_white_smoke">#f2f2f2</color>
+    <color name="chat_manch_blue">#1b6fd9</color>
+    <color name="chat_text_color_slate">#42495d</color>
+    <color name="chat_black">#000000</color>
+    <color name="chat_grey_light_500">#a4a4a4</color>
 </resources>

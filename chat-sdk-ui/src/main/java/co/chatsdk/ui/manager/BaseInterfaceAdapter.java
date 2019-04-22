@@ -478,9 +478,7 @@ public class BaseInterfaceAdapter implements InterfaceAdapter {
 
     @Override
     public void removeChatOption(ChatOption option) {
-        if(chatOptions.contains(option)) {
-            chatOptions.remove(option);
-        }
+        chatOptions.remove(option);
     }
 
     @Override

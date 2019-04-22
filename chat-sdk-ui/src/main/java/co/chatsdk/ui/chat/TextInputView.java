@@ -299,8 +299,7 @@ public class TextInputView extends LinearLayout implements View.OnKeyListener, T
         }
         if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
             int editTextLineCount = ((EditText) v).getLineCount();
-            if (editTextLineCount >= getResources().getInteger(R.integer.chat_sdk_max_message_lines))
-                return true;
+            return editTextLineCount >= getResources().getInteger(R.integer.chat_sdk_max_message_lines);
         }
         return false;
     }

@@ -281,10 +281,10 @@ public class ProfilePicturesActivity extends ImagePreviewActivity {
         if (!getUser().isMe())
             return super.onCreateOptionsMenu(menu);
 
-        addMenuItem = menu.add(Menu.NONE, R.id.action_chat_sdk_add, 12, getString(R.string.action_add_picture));
-        addMenuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-        addMenuItem.setIcon(R.drawable.ic_plus);
-        addMenuItem.setVisible(shouldShowAddButton(ChatSDK.profilePictures().fromUser(getUser())));
+//        addMenuItem = menu.add(Menu.NONE, R.id.action_chat_sdk_add, 12, getString(R.string.action_add_picture));
+//        addMenuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+//        addMenuItem.setIcon(R.drawable.ic_plus);
+//        addMenuItem.setVisible(shouldShowAddButton(ChatSDK.profilePictures().fromUser(getUser())));
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -294,10 +294,10 @@ public class ProfilePicturesActivity extends ImagePreviewActivity {
 
         int id = item.getItemId();
 
-        if (id == R.id.action_chat_sdk_add) {
-            addProfilePicture();
-            return true;
-        }
+//        if (id == R.id.action_chat_sdk_add) {
+//            addProfilePicture();
+//            return true;
+//        }
 
         return super.onOptionsItemSelected(item);
     }

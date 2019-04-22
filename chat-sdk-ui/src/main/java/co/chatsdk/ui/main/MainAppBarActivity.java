@@ -120,21 +120,21 @@ public class MainAppBarActivity extends MainActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.contact_developer) {
-
-            String emailAddress = ChatSDK.config().contactDeveloperEmailAddress;
-            String subject = ChatSDK.config().contactDeveloperEmailSubject;
-            String dialogTitle = ChatSDK.config().contactDeveloperDialogTitle;
-
-            if(StringUtils.isNotEmpty(emailAddress))
-            {
-                Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
-                        "mailto", emailAddress, null));
-                emailIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
-                startActivity(Intent.createChooser(emailIntent, dialogTitle));
-            }
-            return true;
-        }
+//        if (item.getItemId() == R.id.contact_developer) {
+//
+//            String emailAddress = ChatSDK.config().contactDeveloperEmailAddress;
+//            String subject = ChatSDK.config().contactDeveloperEmailSubject;
+//            String dialogTitle = ChatSDK.config().contactDeveloperDialogTitle;
+//
+//            if(StringUtils.isNotEmpty(emailAddress))
+//            {
+//                Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+//                        "mailto", emailAddress, null));
+//                emailIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
+//                startActivity(Intent.createChooser(emailIntent, dialogTitle));
+//            }
+//            return true;
+//        }
 
         return super.onOptionsItemSelected(item);
     }

@@ -34,7 +34,7 @@ dependencies {
 
     api project(':chat-sdk-ui')
 
-    implementation "com.google.firebase:firebase-messaging:$firebaseMessagingVersion"
+    implementation "com.google.firebase:firebase-messaging:17.6.0"
     implementation "com.google.firebase:firebase-functions:$firebaseFunctionsVersion"
     implementation "com.squareup.okhttp3:okhttp:$okHttpVersion"
 }

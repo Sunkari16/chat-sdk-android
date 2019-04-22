@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/message_root_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_gravity="start"
+        android:layout_margin="@dimen/margin_4dp">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/sdvUserProfile"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:placeholderImage="@drawable/ic_manch_avatar_placeholder"
+            app:roundAsCircle="true" />
+
+        <TextView
+            android:id="@+id/tvMessageContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_10dp"
+            android:layout_marginLeft="@dimen/margin_10dp"
+            android:background="@drawable/bg_chat_reply"
+            android:lineSpacingExtra="5sp"
+            android:maxWidth="280dp"
+            android:paddingLeft="@dimen/margin_12dp"
+            android:paddingTop="@dimen/padding_8dp"
+            android:paddingRight="@dimen/margin_12dp"
+            android:paddingBottom="@dimen/padding_8dp"
+            android:textColor="#0d0925"
+            app:layout_constraintStart_toEndOf="@id/sdvUserProfile"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="हो जाए! खैर, मैं हमेशा पेरिस की यात्रा करना चामैं हमेशा पेरिस की यात्रा करना चा" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</RelativeLayout>

@@ -21,6 +21,7 @@
             android:background="@android:color/white"
             android:paddingEnd="10dp"
             android:paddingRight="10dp"
+            app:title="@string/chatr_label_message"
             app:layout_scrollFlags="scroll|enterAlways"
             app:navigationIcon="@drawable/ic_icon_back_18_px"
             app:titleTextColor="@color/colorPrimaryDark">

@@ -73,10 +73,6 @@
                     app:layout_constraintStart_toStartOf="@id/tvToolbarTitle"
                     app:layout_constraintTop_toBottomOf="@id/tvToolbarTitle"
                     tools:text="Active 30m ago" />
-                
-                <ImageView
-                    android:layout_width=""
-                    android:layout_height="" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

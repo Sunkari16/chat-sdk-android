@@ -4,9 +4,8 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
-
-
 import androidx.fragment.app.Fragment;
+
 import co.chatsdk.core.session.ChatSDK;
 import co.chatsdk.ui.R;
 import co.chatsdk.ui.main.BaseActivity;
@@ -48,7 +47,7 @@ public class InboxThreadActivity extends BaseActivity {
     private void initViews() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(view -> finish());
-
+        toolbar.setTitle(R.string.chatr_label_message);
         findViewById(R.id.ivAddUser).setOnClickListener(view -> ChatSDK.ui().startActivity(this, SearchUserActivity.class));
     }
 }

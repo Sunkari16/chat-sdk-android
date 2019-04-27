@@ -40,6 +40,8 @@ public class BaseMessageViewHolder extends AbstractMessageViewHolder {
 
         // Enable linkify
         messageTextView.setAutoLinkMask(Linkify.ALL);
+
+        avatarImageView.setOnClickListener(this::onProfileClick);
     }
 
     @Override
@@ -56,6 +58,10 @@ public class BaseMessageViewHolder extends AbstractMessageViewHolder {
         if (onClickListener != null) {
             onClickListener.onClick(v);
         }
+    }
+
+    public void onProfileClick(View view) {
+        ChatSDK.ui().startProfileActivity(activity,message.getSender().getEntityID());
     }
 
     public boolean onLongClick(View v) {

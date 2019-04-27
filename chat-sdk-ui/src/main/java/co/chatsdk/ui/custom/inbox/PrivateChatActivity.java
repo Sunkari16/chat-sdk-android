@@ -16,6 +16,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import org.apache.commons.lang3.StringUtils;
@@ -25,12 +32,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import co.chatsdk.core.dao.Keys;
 import co.chatsdk.core.dao.Message;
 import co.chatsdk.core.dao.Thread;
@@ -153,6 +154,16 @@ public class PrivateChatActivity extends BaseActivity implements ChatOptionsDele
         title.setText(displayName);
         SimpleDraweeView userView = findViewById(R.id.sdvUserProfile);
         ThreadImageBuilder.load(userView, thread);
+
+        //profile click listener
+        userView.setOnClickListener(view -> {
+            for (User user : thread.getUsers()) {
+                if (!user.isMe()) {
+                    ChatSDK.ui().startProfileActivity(this, user.getEntityID());
+                    break;
+                }
+            }
+        });
     }
 
     protected void initViews() {

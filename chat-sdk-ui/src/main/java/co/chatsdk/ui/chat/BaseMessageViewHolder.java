@@ -72,6 +72,10 @@ public class BaseMessageViewHolder extends AbstractMessageViewHolder {
         // Enable linkify
         messageTextView.setAutoLinkMask(Linkify.ALL);
 
+        avatarImageView.setOnClickListener(view -> {
+
+        });
+
     }
 
     public void onClick (View v) {

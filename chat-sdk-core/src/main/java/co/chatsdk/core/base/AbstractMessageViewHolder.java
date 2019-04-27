@@ -6,6 +6,8 @@ import android.widget.LinearLayout;
 
 import androidx.recyclerview.widget.RecyclerView;
 import co.chatsdk.core.dao.Message;
+import co.chatsdk.core.dao.Thread;
+import io.reactivex.subjects.PublishSubject;
 
 public abstract class AbstractMessageViewHolder extends RecyclerView.ViewHolder {
 
@@ -14,6 +16,7 @@ public abstract class AbstractMessageViewHolder extends RecyclerView.ViewHolder 
 
     protected View.OnClickListener onClickListener = null;
     protected View.OnLongClickListener onLongClickListener = null;
+    protected PublishSubject<String> profileClickListener;
 
     public AbstractMessageViewHolder(View itemView, Activity activity) {
         super(itemView);
@@ -46,4 +49,7 @@ public abstract class AbstractMessageViewHolder extends RecyclerView.ViewHolder 
         onLongClickListener = listener;
     }
 
+    public void setProfileClickListwener(PublishSubject<String> profileClickListener) {
+        this.profileClickListener = profileClickListener;
+    }
 }

@@ -1,12 +1,20 @@
 package co.chatsdk.ui.custom.inbox;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentActivity;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.facebook.drawee.view.SimpleDraweeView;
+
+import org.ocpsoft.prettytime.PrettyTime;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -14,16 +22,11 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentActivity;
-import androidx.recyclerview.widget.RecyclerView;
 import co.chatsdk.core.dao.DaoCore;
 import co.chatsdk.core.dao.Message;
 import co.chatsdk.core.dao.Thread;
-import co.chatsdk.core.dao.User;
-import co.chatsdk.core.defines.Availability;
 import co.chatsdk.core.interfaces.ThreadType;
 import co.chatsdk.core.session.ChatSDK;
 import co.chatsdk.core.utils.Strings;
@@ -157,8 +160,9 @@ public class PrivateThreadAdapter extends RecyclerView.Adapter<PrivateThreadAdap
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        private SimpleDraweeView ivUserProfile, sdvOnlineStatus;
+        private SimpleDraweeView ivUserProfile;
         private TextView tvUserName, tvLastMsg, tvLastMsgTime;
+        private View sdvOnlineStatus;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -181,9 +185,8 @@ public class PrivateThreadAdapter extends RecyclerView.Adapter<PrivateThreadAdap
 
             Date lastMessageAddedDate = thread.getLastMessageAddedDate();
             if (lastMessageAddedDate != null) {
-//                String rawTime = Util.getTimesAgo(lastMessageAddedDate.getTime());
-                String rawTime = "";
-                tvLastMsgTime.setText(rawTime.replace("|", ""));
+                String rawTime = getTimesAgo(lastMessageAddedDate.getTime());
+                tvLastMsgTime.setText(rawTime);
 
                 Message message = thread.getLastMessage();
                 if (message == null) {
@@ -194,7 +197,6 @@ public class PrivateThreadAdapter extends RecyclerView.Adapter<PrivateThreadAdap
                         thread.update();
                     }
                 }
-
 
                 tvLastMsg.setText(getLastMessageText(message));
             }
@@ -207,27 +209,28 @@ public class PrivateThreadAdapter extends RecyclerView.Adapter<PrivateThreadAdap
 
             if (unreadMessageCount != 0 && (thread.typeIs(ThreadType.Private) || ChatSDK.config().unreadMessagesCountForPublicChatRoomsEnabled)) {
                 tvLastMsg.setTextColor(ContextCompat.getColor(context.get(), R.color.chat_text_color_slate));
+                Typeface boldTypeface = Typeface.defaultFromStyle(Typeface.BOLD);
+                tvLastMsg.setTypeface(boldTypeface);
+                sdvOnlineStatus.setVisibility(View.VISIBLE);
             } else {
                 tvLastMsg.setTextColor(ContextCompat.getColor(context.get(), R.color.chat_grey_light_500));
-            }
-
-            //get user availability, this will work only for one to one chat
-            List<User> userList = thread.getUsers();
-            User user = null;
-            for (User user1 : userList) {
-                if (!user1.isMe()) {
-                    user = user1;
-                    break;
-                }
-            }
-            if (user != null && Availability.Available.equals(user.getAvailability())) {
-                sdvOnlineStatus.setVisibility(View.VISIBLE);
-                sdvOnlineStatus.setActualImageResource(R.color.chat_manch_blue);
-            } else {
                 sdvOnlineStatus.setVisibility(View.GONE);
+                Typeface boldTypeface = Typeface.defaultFromStyle(Typeface.NORMAL);
+                tvLastMsg.setTypeface(boldTypeface);
             }
 
             ThreadImageBuilder.load(ivUserProfile, thread);
         }
+    }
+
+    /**
+     * time unit
+     *
+     * @param time
+     * @return
+     */
+    public static String getTimesAgo(long time) {
+        PrettyTime prettyTime = new PrettyTime(Locale.getDefault());
+        return String.format("\u202f%1s", prettyTime.format(new Date(time)));
     }
 }

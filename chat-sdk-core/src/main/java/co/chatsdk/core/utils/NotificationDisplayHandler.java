@@ -25,8 +25,7 @@ import co.chatsdk.core.dao.Keys;
 import co.chatsdk.core.dao.Message;
 import co.chatsdk.core.dao.User;
 import co.chatsdk.core.session.ChatSDK;
-import co.chatsdk.core.session.InterfaceManager;
-import co.chatsdk.core.session.StorageManager;
+import timber.log.Timber;
 
 public class NotificationDisplayHandler {
 
@@ -50,7 +49,7 @@ public class NotificationDisplayHandler {
     public void createMessageNotification(final Context context, Intent resultIntent, String userEntityID, String title, String message) {
 
         int pushIcon = ChatSDK.config().pushNotificationImageDefaultResourceId;
-        if(pushIcon <= 0) {
+        if (pushIcon <= 0) {
             pushIcon = R.drawable.icn_72_push_mask;
         }
         final int smallPushIcon = pushIcon;
@@ -86,9 +85,9 @@ public class NotificationDisplayHandler {
      * @param largeIcon
      * @param smallIconResID
      * @param soundUri
-     * @param number - Number of notifications represented by this alert
+     * @param number         - Number of notifications represented by this alert
      */
-    public void createAlertNotification(Context context, Intent resultIntent, String title, String message, Bitmap largeIcon, int smallIconResID, Uri soundUri, int number){
+    public void createAlertNotification(Context context, Intent resultIntent, String title, String message, Bitmap largeIcon, int smallIconResID, Uri soundUri, int number) {
 
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, resultIntent, PendingIntent.FLAG_CANCEL_CURRENT);
 
@@ -135,20 +134,23 @@ public class NotificationDisplayHandler {
 
         Notification notification = builder.build();
 
-        notification.flags = Notification.FLAG_AUTO_CANCEL ;
+        notification.flags = Notification.FLAG_AUTO_CANCEL;
 
         notificationManager.notify(MESSAGE_NOTIFICATION_ID, notification);
 
         wakeScreen(context);
+
+        Timber.v("Notifications payload is %1s %2s", title, message);
     }
 
     /**
      * Waking up the screen
-     * * * */
-    private void wakeScreen(Context context){
+     * * *
+     */
+    private void wakeScreen(Context context) {
 
         // Waking the screen so the user will see the notification
-        PowerManager pm = (PowerManager)context.getSystemService(Context.POWER_SERVICE);
+        PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
 
 
         boolean isScreenOn;
@@ -158,12 +160,11 @@ public class NotificationDisplayHandler {
         else
             isScreenOn = pm.isInteractive();
 
-        if(!isScreenOn)
-        {
+        if (!isScreenOn) {
 
             PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK
-                    |PowerManager.ON_AFTER_RELEASE
-                    |PowerManager.ACQUIRE_CAUSES_WAKEUP, "chat-sdk:MyLock");
+                    | PowerManager.ON_AFTER_RELEASE
+                    | PowerManager.ACQUIRE_CAUSES_WAKEUP, "chat-sdk:MyLock");
 
             wl.acquire(5000);
             wl.release();

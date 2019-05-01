@@ -38,7 +38,7 @@ public abstract class BaseThreadFragment extends BaseFragment {
     protected PrivateThreadAdapter adapter;
     protected String filter;
     protected MenuItem addMenuItem;
-    protected View mainView;
+    protected View mainView,tvNoMsg;
 
     private DisposableList disposableList = new DisposableList();
 
@@ -84,6 +84,7 @@ public abstract class BaseThreadFragment extends BaseFragment {
     public void initViews() {
         searchField = mainView.findViewById(R.id.etSearchQuery);
         listThreads = mainView.findViewById(R.id.rvPrivateThread);
+        tvNoMsg = mainView.findViewById(R.id.tvNoMsg);
 
         adapter = new PrivateThreadAdapter(getActivity());
 
@@ -152,6 +153,11 @@ public abstract class BaseThreadFragment extends BaseFragment {
         if (adapter != null) {
             adapter.clearData();
             List<Thread> threads = filter(getThreads());
+            if (threads.size()>0){
+                tvNoMsg.setVisibility(View.GONE);
+            }else{
+                tvNoMsg.setVisibility(View.VISIBLE);
+            }
             adapter.updateThreads(threads);
         }
     }

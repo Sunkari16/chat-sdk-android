@@ -254,4 +254,5 @@
     <string name="create_thread">Create Room</string>
 
     <string name="update_thread">Update Room</string>
+    <string name="no_messages_found" translatable="false">आपके लिए अभी तक कोई मैसेज नहीं आया है</string>
 </resources>

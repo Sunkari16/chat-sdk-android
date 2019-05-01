@@ -173,7 +173,7 @@ public class FirebaseAuthenticationHandler extends AbstractAuthenticationHandler
         return Completable.create(
                 emitter-> {
                     final User user = ChatSDK.currentUser();
-
+                    if (user==null)emitter.onError(new Throwable("user is null"));
                     // Stop listening to user related alerts. (added message or thread.)
                     ChatSDK.events().impl_currentUserOff(user.getEntityID());
 

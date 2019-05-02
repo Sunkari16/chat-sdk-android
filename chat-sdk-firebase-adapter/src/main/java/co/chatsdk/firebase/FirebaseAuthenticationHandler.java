@@ -36,22 +36,22 @@ import static co.chatsdk.firebase.FirebaseErrors.getFirebaseError;
 public class FirebaseAuthenticationHandler extends AbstractAuthenticationHandler {
 
     public Completable authenticate() {
-        return Single.create((SingleOnSubscribe<FirebaseUser>) emitter-> {
-                    if (isAuthenticating()) {
-                        emitter.onError(ChatError.getError(ChatError.Code.AUTH_IN_PROCESS, "Cant execute two auth in parallel"));
-                    } else {
-                        setAuthStatus(AuthStatus.CHECKING_IF_AUTH);
+        return Single.create((SingleOnSubscribe<FirebaseUser>) emitter -> {
+            if (isAuthenticating()) {
+                emitter.onError(ChatError.getError(ChatError.Code.AUTH_IN_PROCESS, "Cant execute two auth in parallel"));
+            } else {
+                setAuthStatus(AuthStatus.CHECKING_IF_AUTH);
 
-                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-                        if (user != null) {
-                            emitter.onSuccess(user);
+                if (user != null) {
+                    emitter.onSuccess(user);
 
-                        } else {
-                            emitter.onError(ChatError.getError(ChatError.Code.NO_AUTH_DATA, "No auth bundle found"));
-                        }
-                    }
-                })
+                } else {
+                    emitter.onError(ChatError.getError(ChatError.Code.NO_AUTH_DATA, "No auth bundle found"));
+                }
+            }
+        })
                 .flatMapCompletable(this::authenticateWithUser)
                 .doOnTerminate(this::setAuthStateToIdle) // Whether we complete successfully or not, we set the status to idle
                 .subscribeOn(Schedulers.single());
@@ -60,7 +60,7 @@ public class FirebaseAuthenticationHandler extends AbstractAuthenticationHandler
     @Override
     public Completable authenticate(final AccountDetails details) {
         return Single.create((SingleOnSubscribe<FirebaseUser>)
-                emitter->{
+                emitter -> {
                     if (isAuthenticating()) {
                         emitter.onError(ChatError.getError(ChatError.Code.AUTH_IN_PROCESS, "Can't execute two auth in parallel"));
                         return;
@@ -68,7 +68,7 @@ public class FirebaseAuthenticationHandler extends AbstractAuthenticationHandler
 
                     setAuthStatus(AuthStatus.AUTH_WITH_MAP);
 
-                    OnCompleteListener<AuthResult> resultHandler = task->AsyncTask.execute(()->{
+                    OnCompleteListener<AuthResult> resultHandler = task -> AsyncTask.execute(() -> {
                         if (task.isComplete() && task.isSuccessful()) {
                             emitter.onSuccess(task.getResult().getUser());
                         } else {
@@ -76,7 +76,7 @@ public class FirebaseAuthenticationHandler extends AbstractAuthenticationHandler
                         }
                     });
 
-                    switch ( details.type ) {
+                    switch (details.type) {
                         case Username:
                             FirebaseAuth.getInstance().signInWithEmailAndPassword(details.username, details.password).addOnCompleteListener(resultHandler);
                             break;
@@ -104,7 +104,7 @@ public class FirebaseAuthenticationHandler extends AbstractAuthenticationHandler
 
     public Completable authenticateWithUser(final FirebaseUser user) {
         return Completable.create(
-                e->{
+                e -> {
                     final Map<String, Object> loginInfoMap = new HashMap<>();
                     // Save the authentication ID for the current user
                     // Set the current user
@@ -120,7 +120,7 @@ public class FirebaseAuthenticationHandler extends AbstractAuthenticationHandler
                     // Do a once() on the user to push its details to firebase.
                     final UserWrapper userWrapper = UserWrapper.initWithAuthData(user);
 
-                    userWrapper.once().subscribe(()->{
+                    userWrapper.once().subscribe(() -> {
                         userWrapper.getModel().update();
 
                         ChatSDK.events().impl_currentUserOn(userWrapper.getModel().getEntityID());
@@ -152,10 +152,10 @@ public class FirebaseAuthenticationHandler extends AbstractAuthenticationHandler
     @Override
     public Completable changePassword(String email, String oldPassword, final String newPassword) {
         return Completable.create(
-                emitter->{
+                emitter -> {
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-                    OnCompleteListener<Void> resultHandler = task->{
+                    OnCompleteListener<Void> resultHandler = task -> {
                         if (task.isSuccessful()) {
                             emitter.onComplete();
                         } else {
@@ -171,9 +171,12 @@ public class FirebaseAuthenticationHandler extends AbstractAuthenticationHandler
 
     public Completable logout() {
         return Completable.create(
-                emitter-> {
+                emitter -> {
                     final User user = ChatSDK.currentUser();
-                    if (user==null)emitter.onError(new Throwable("user is null"));
+                    if (user == null) {
+                        emitter.onError(new Throwable("user is null or already logged out"));
+                        return;
+                    }
                     // Stop listening to user related alerts. (added message or thread.)
                     ChatSDK.events().impl_currentUserOff(user.getEntityID());
 
@@ -182,7 +185,7 @@ public class FirebaseAuthenticationHandler extends AbstractAuthenticationHandler
 //                        ChatSDK.push().unsubscribeToPushChannel(user.getPushChannel());
 //                    }
 
-                    ChatSDK.hook().executeHook(HookEvent.WillLogout, new HashMap<>()).concatWith(ChatSDK.core().setUserOffline()).subscribe(()->{
+                    ChatSDK.hook().executeHook(HookEvent.WillLogout, new HashMap<>()).concatWith(ChatSDK.core().setUserOffline()).subscribe(() -> {
 
                         FirebaseAuth.getInstance().signOut();
 
@@ -197,7 +200,8 @@ public class FirebaseAuthenticationHandler extends AbstractAuthenticationHandler
                         if (ChatSDK.hook() != null) {
                             HashMap<String, Object> data = new HashMap<>();
                             data.put(HookEvent.User, user);
-                            ChatSDK.hook().executeHook(HookEvent.DidLogout, data).subscribe(new CrashReportingCompletableObserver());;
+                            ChatSDK.hook().executeHook(HookEvent.DidLogout, data).subscribe(new CrashReportingCompletableObserver());
+                            ;
                         }
 
                         authenticatedThisSession = false;
@@ -211,8 +215,8 @@ public class FirebaseAuthenticationHandler extends AbstractAuthenticationHandler
 
     public Completable sendPasswordResetMail(final String email) {
         return Completable.create(
-                emitter->{
-                    OnCompleteListener<Void> resultHandler = task->{
+                emitter -> {
+                    OnCompleteListener<Void> resultHandler = task -> {
                         if (task.isSuccessful()) {
                             emitter.onComplete();
                         } else {

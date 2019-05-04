@@ -19,3 +19,6 @@
 -dontwarn javax.annotation.**
 -dontwarn com.android.volley.toolbox.**
 -dontwarn com.facebook.infer.**
+
+-keep class com.facebook.imagepipeline.gif.** { *; }
+-keep class com.facebook.imagepipeline.webp.** { *; }
